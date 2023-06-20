@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="flex-container">
+    <div>
+        {% if error%}
+        <div class="alert alert-danger text-center" role="alert">
+            <p class="error mb-0">{{error}}</p>
+        </div>
+        {% endif %}
+        <div class="login-box">
+            <h3 class=>Login</h3>
+            <form action="/validate" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" class="form-control mb-2" name="username" type="text" placeholder="Bobby Smith">
+                    <label for="password">Password</label>
+                    <input id="password" class="form-control mb-2" name="password" type="password">
+                    <input class="btn btn-pink" type="submit" value="Login">
+                </div>
+            </form>
+            <small>At <i>bisous bisous</i> 😘, we only value two things: love at first sight, and your privacy ❤️</small>
+        </div>
+    </div>
+</div>
+{% endblock %}

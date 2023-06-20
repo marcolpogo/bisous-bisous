@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="flex-container">
+    <div>
+        {% if error%}
+        <div class="alert alert-danger text-center" role="alert">
+            <p class="error mb-0">{{error}}</p>
+        </div>
+        {% endif %}
+        <div class="login-box">
+            <h3 class=>2 Factor Authentification</h3>
+            <p>
+                Here at <i>bisous bisous</i> 😘, we value your privacy and security.<br>
+                That's why we demand that all users use 2FA.
+            </p>
+            <h4>How to validate your identity?</h4>
+            <p>
+                Visit this page with your chosen device for 2FA.<br>
+                Your device: <code>Intel Mac OS X 45.55</code>
+            </p>
+            <img class="pb-3 pt-3" style="display:block" src="/img/logo-computer.png" width="200">
+            <div>
+                <small>You have 10 minutes to validate your identity.</small><br>
+                <a class="btn btn-pink mt-2" href="/logout">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
