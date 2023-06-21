@@ -29,8 +29,7 @@ class Database:
 
     def get_user(self, username):
         cursor = self.get_connection().cursor()
-        # Injection sql
-        # Sinon essayer de faire l'injection avec le query bien fait mais que le char est %
+        # Injection SQL
         query = "select * from users where username = '" + username + "'"
         try :
             users = cursor.execute(query).fetchall()

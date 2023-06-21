@@ -42,10 +42,10 @@ def validate():
     username = request.form['username']
     password = request.form['password']
     
-    # Check for invalid char
-    blacklist = [";"] # Maybe add some more limitations?
+    # Check for invalid char (only in username)
+    blacklist = [";"]
     for char in blacklist:
-        if char in username or char in password: 
+        if char in username: 
             msg = "Invalid character...? 🥲"
             return redirect(url_for('login', error=msg))
 
@@ -61,10 +61,6 @@ def validate():
 
     # Invalid password
     return redirect(url_for('login', error='Oops... Forgot your password? 🤨'))
-
-
-# TODO: Tester moi-même comment faire pour avoir l'injection SQL:username et password
-# Lorsque ce sera fait, l'app serait prête à être déployée normalement
 
 
 # Page de 2-Factor-Authentification
@@ -87,4 +83,4 @@ def two_factor_auth():
 def logout():
     session.pop(cookie_name, None)
     return redirect("/")
-
+    
