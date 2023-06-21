@@ -31,7 +31,7 @@ class Database:
         cursor = self.get_connection().cursor()
         # Injection sql
         # Sinon essayer de faire l'injection avec le query bien fait mais que le char est %
-        query = "select * from users where user like '" + username + "'"
+        query = "select * from users where username = '" + username + "'"
         try :
             users = cursor.execute(query).fetchall()
         except sqlite3.OperationalError:
@@ -45,9 +45,9 @@ class Database:
     def is_valid_password(self, username, password):
         # Pas d'injection SQL ici
         cursor = self.get_connection().cursor()
-        query = 'select * from users where user = ? and pass = ?'
+        query = 'select * from users where username = ? and password = ?'
         cursor.execute(query, (username, password))
         user = cursor.fetchall()
         cursor.close()
     
-        return len(user) == 0
+        return len(user) != 0

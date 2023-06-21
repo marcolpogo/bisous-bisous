@@ -38,36 +38,33 @@ def login():
 
 @app.route('/validate', methods=['POST'])
 def validate():
-    # What happens if they arent in the request?
+    # If these field aren't there : error 400
     username = request.form['username']
     password = request.form['password']
-
+    
+    # Check for invalid char
     blacklist = [";"] # Maybe add some more limitations?
     for char in blacklist:
-        if char in username: 
+        if char in username or char in password: 
             msg = "Invalid character...? 🥲"
             return redirect(url_for('login', error=msg))
 
-    if len(get_db().get_user(username)) != 0:
+    # Invalid username
+    if len(get_db().get_user(username)) == 0:
+        return redirect(url_for('login', error='Wrong username baby 🙃'))
+
+    # Valid password and username
+    if get_db().is_valid_password(username, password):
         # Initialize session
         session[cookie_name] = username # Change for automatic randomized value?
         return redirect(url_for('two_factor_auth'))
 
-    return redirect(url_for('login', error='Wrong username baby 🙃'))
+    # Invalid password
+    return redirect(url_for('login', error='Oops... Forgot your password? 🤨'))
 
 
-def validate_username(username, password):
-    pass
-
-
-def validate_password(username, password):
-    pass
-
-
-# TODO: Rendre l'injection SQL plus difficile et intéressante...
-# Ce serait bien qu'il doit réellement trouver le mdp
-
-
+# TODO: Tester moi-même comment faire pour avoir l'injection SQL:username et password
+# Lorsque ce sera fait, l'app serait prête à être déployée normalement
 
 
 # Page de 2-Factor-Authentification
