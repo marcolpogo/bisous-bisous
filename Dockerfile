@@ -10,6 +10,7 @@ COPY templates templates
 COPY db/users.db db/users.db
 COPY app.py app.py
 COPY database.py database.py
+COPY flask_session flask_session
 
 ENV FLASK_APP=app.py
 EXPOSE 5000

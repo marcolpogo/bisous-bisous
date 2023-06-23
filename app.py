@@ -5,11 +5,12 @@ from flask_session import Session
 from datetime import timedelta
 
 # Instanciation de l'app
-app = Flask(__name__, static_url_path="", static_folder="static")
+app = Flask(__name__, static_url_path='', static_folder='static')
 
-app.secret_key = "like-me-like-me-not"
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
+app.secret_key = 'like-me-like-me-not'
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_COOKIE_NAME'] = 'bisous-session'
+app.config['SESSION_TYPE'] = 'filesystem'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 10)
 Session(app)
 
@@ -43,10 +44,10 @@ def validate():
     password = request.form['password']
     
     # Check for invalid char (only in username)
-    blacklist = [";"]
+    blacklist = [';']
     for char in blacklist:
         if char in username: 
-            msg = "Invalid character...? 🥲"
+            msg = 'Invalid character...? 🥲'
             return redirect(url_for('login', error=msg))
 
     # Invalid username
@@ -56,7 +57,7 @@ def validate():
     # Valid password and username
     if get_db().is_valid_password(username, password):
         # Initialize session
-        session[cookie_name] = username # Change for automatic randomized value?
+        session[cookie_name] = username
         return redirect(url_for('two_factor_auth'))
 
     # Invalid password
@@ -82,5 +83,5 @@ def two_factor_auth():
 @app.route('/logout', methods=['GET'])
 def logout():
     session.pop(cookie_name, None)
-    return redirect("/")
+    return redirect(url_for('login'))
     
