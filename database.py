@@ -33,7 +33,7 @@ class Database:
         query = "select * from users where username = '" + username + "'"
         try :
             users = cursor.execute(query).fetchall()
-        except sqlite3.OperationalError:
+        except sqlite3.Error:
             # Prevent errors from SQL
             cursor.close()
             return []
